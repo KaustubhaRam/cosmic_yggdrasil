@@ -1,7 +1,7 @@
 import cx_Oracle
 
 try:
-	con = cx_Oracle.connect('system/oracle_1234@localhost:1521/xe')
+	con = cx_Oracle.connect('system/mysql@localhost:1521/xe')
 
 except cx_Oracle.DatabaseError as er:
 	print('There is an error in the Oracle database:', er)
@@ -11,7 +11,7 @@ else:
 		cur = con.cursor()
 
 		# fetchall() is used to fetch all records from result set
-		cur.execute('select * from agencies')
+		cur.execute('select * from student')
 		rows = cur.fetchall()
 		print(rows)
 
