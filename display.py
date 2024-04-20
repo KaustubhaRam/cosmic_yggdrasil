@@ -11,7 +11,7 @@ else:
 		cur = con.cursor()
 
 		# fetchall() is used to fetch all records from result set
-		cur.execute('select * from student')
+		cur.execute('select * from Starborn_Login')
 		rows = cur.fetchall()
 		print(rows)
 

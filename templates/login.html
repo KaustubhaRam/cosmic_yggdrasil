@@ -15,7 +15,7 @@
                 <div class="container">
                     <h1>Login</h1>
 
-                    <form>
+                    <form method="POST" action="{{ url_for('login') }}">
                         <div class="form-group">
                             <label for="username">Username*</label>
                             <input type="text" name="username" id="username" required class="form-element" placeholder="Starborn"/>

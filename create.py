@@ -3,22 +3,23 @@ import cx_Oracle
 # Establish a connection to the Oracle database
 try:
     # Connect using your credentials and Oracle SID
-    con = cx_Oracle.connect('system/oracle_1234@localhost:1521/xe')
+    con = cx_Oracle.connect('system/mysql@localhost:1521/xe')
     print("Connected to Oracle Database", con.version)
     cursor = con.cursor()
 
-    # Drop existing tables (optional, be careful with this in a production environment)
+     # Drop existing tables (optional, be careful with this in a production environment)
     drop_statements = [
-        "DROP TABLE Space_Exploration_Budgets PURGE",
-        "DROP TABLE Space_Events PURGE",
-        "DROP TABLE Launch_Sites PURGE",
-        "DROP TABLE Exoplanets PURGE",
-        "DROP TABLE Planets PURGE",
-        "DROP TABLE Astronauts PURGE",
-        "DROP TABLE Missions PURGE",
-        "DROP TABLE Spacecrafts PURGE",
-        "DROP TABLE Stars PURGE",
-        "DROP TABLE Space_Agencies PURGE"
+        "DROP TABLE Starborn_Space_Budgets",
+        "DROP TABLE Starborn_Space_Events",
+        "DROP TABLE Starborn_Launch_Sites",
+        "DROP TABLE Starborn_Exoplanets",
+        "DROP TABLE Starborn_Planets",
+        "DROP TABLE Starborn_Astronauts",
+        "DROP TABLE Starborn_Missions",
+        "DROP TABLE Starborn_Spacecrafts",
+        "DROP TABLE Starborn_Stars",
+        "DROP TABLE Starborn_Space_Agencies",
+        "DROP TABLE Starborn_Login",
     ]
     for statement in drop_statements:
         try:
@@ -28,19 +29,19 @@ try:
 
     # Create table commands
     cursor.execute("""
-        CREATE TABLE Stars (
+        CREATE TABLE Starborn_Stars (
             star_id NUMBER PRIMARY KEY,
             star_name VARCHAR2(255) NOT NULL
         )""")
     cursor.execute("""
-        CREATE TABLE Spacecrafts (
+        CREATE TABLE Starborn_Spacecrafts (
             spacecraft_id NUMBER PRIMARY KEY,
             spacecraft_name VARCHAR2(255) NOT NULL,
             manufacturer VARCHAR2(255) NOT NULL,
             inaugural_date DATE
         )""")
     cursor.execute("""
-        CREATE TABLE Missions (
+        CREATE TABLE Starborn_Missions (
             mission_id NUMBER PRIMARY KEY,
             mission_name VARCHAR2(255) NOT NULL,
             launch_date DATE,
@@ -48,27 +49,27 @@ try:
             duration NUMBER,
             mission_status VARCHAR2(255),
             spacecraft_id NUMBER,
-            CONSTRAINT fk_spacecraft FOREIGN KEY (spacecraft_id) REFERENCES Spacecrafts(spacecraft_id)
+            CONSTRAINT fk_spacecraft FOREIGN KEY (spacecraft_id) REFERENCES Starborn_Spacecrafts(spacecraft_id)
         )""")
     cursor.execute("""
-        CREATE TABLE Astronauts (
+        CREATE TABLE Starborn_Astronauts (
             astronaut_id NUMBER PRIMARY KEY,
             name VARCHAR2(255) NOT NULL,
             nationality VARCHAR2(255) NOT NULL,
             birth_date DATE
         )""")
     cursor.execute("""
-        CREATE TABLE Planets (
+        CREATE TABLE Starborn_Planets (
             planet_id NUMBER PRIMARY KEY,
             planet_name VARCHAR2(255) NOT NULL,
             diameter NUMBER,
-            distance_from_sun NUMBER,
+            distance_from_host NUMBER,
             number_of_moons NUMBER,
-            star_id NUMBER,
-            CONSTRAINT fk_stars FOREIGN KEY (star_id) REFERENCES Stars(star_id)
+            host_star_id NUMBER,
+            CONSTRAINT fk_stars FOREIGN KEY (host_star_id) REFERENCES Starborn_Stars(star_id)
         )""")
     cursor.execute("""
-        CREATE TABLE Exoplanets (
+        CREATE TABLE Starborn_Exoplanets (
             exoplanet_id NUMBER PRIMARY KEY,
             exoplanet_name VARCHAR2(255) NOT NULL,
             discovery_method VARCHAR2(255),
@@ -77,35 +78,46 @@ try:
             host_star_name VARCHAR2(255)
         )""")
     cursor.execute("""
-        CREATE TABLE Launch_Sites (
+        CREATE TABLE Starborn_Launch_Sites (
             launch_site_id NUMBER PRIMARY KEY,
             launch_site_name VARCHAR2(255) NOT NULL,
             country VARCHAR2(255) NOT NULL,
-            latitude FLOAT,
-            longitude FLOAT
+            latitude NUMBER(9,6),
+            longitude NUMBER(9,6)
         )""")
     cursor.execute("""
-        CREATE TABLE Space_Events (
+        CREATE TABLE Starborn_Space_Events (
             event_id NUMBER PRIMARY KEY,
             event_name VARCHAR2(255) NOT NULL,
             event_date DATE,
             description VARCHAR2(1000)
         )""")
     cursor.execute("""
-        CREATE TABLE Space_Agencies (
+        CREATE TABLE Starborn_Space_Agencies (
             agency_id NUMBER PRIMARY KEY,
             agency_name VARCHAR2(255) NOT NULL,
             country VARCHAR2(255) NOT NULL,
             establishment_year NUMBER
         )""")
     cursor.execute("""
-        CREATE TABLE Space_Exploration_Budgets (
+        CREATE TABLE Starborn_Space_Budgets (
             mission_id NUMBER,
             agency_id NUMBER,
             budget_amount NUMBER,
             PRIMARY KEY (mission_id, agency_id),
-            FOREIGN KEY (mission_id) REFERENCES Missions(mission_id),
-            FOREIGN KEY (agency_id) REFERENCES Space_Agencies(agency_id)
+            FOREIGN KEY (mission_id) REFERENCES Starborn_Missions(mission_id),
+            FOREIGN KEY (agency_id) REFERENCES Starborn_Space_Agencies(agency_id)
+        )""")
+    
+    cursor.execute("""
+        CREATE TABLE Starborn_Login (
+            username VARCHAR2(255) PRIMARY KEY,
+            password VARCHAR2(255)
+        )""")
+    
+    cursor.execute("""
+        INSERT INTO Starborn_Login VALUES(
+            'user','pwd'
         )""")
 
     # Commit the changes to the database
