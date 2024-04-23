@@ -206,7 +206,7 @@ def launchsites():
     return render_template('launchsites.html')
 
 @app.route('/missions')
-def misions():
+def missions():
     if request.method == 'POST' and 'missionid' in request.form and 'missionname' in request.form and 'launchdate' in request.form and 'destination' in request.form and 'duration' in request.form and 'missionstatus' in request.form and 'spacecraftid' in request.form:
         mission_id = request.form['missionid']
         mission_name = request.form['missionname']
