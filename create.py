@@ -7,25 +7,7 @@ try:
     print("Connected to Oracle Database", con.version)
     cursor = con.cursor()
 
-     # Drop existing tables (optional, be careful with this in a production environment)
-    drop_statements = [
-        "DROP TABLE Starborn_Space_Budgets",
-        "DROP TABLE Starborn_Space_Events",
-        "DROP TABLE Starborn_Launch_Sites",
-        "DROP TABLE Starborn_Exoplanets",
-        "DROP TABLE Starborn_Planets",
-        "DROP TABLE Starborn_Astronauts",
-        "DROP TABLE Starborn_Missions",
-        "DROP TABLE Starborn_Spacecrafts",
-        "DROP TABLE Starborn_Stars",
-        "DROP TABLE Starborn_Space_Agencies",
-        "DROP TABLE Starborn_Login",
-    ]
-    for statement in drop_statements:
-        try:
-            cursor.execute(statement)
-        except cx_Oracle.DatabaseError as e:
-            print("Ignoring error while dropping tables:", e)
+     
 
     # Create table commands
     cursor.execute("""
