@@ -40,17 +40,7 @@ try:
             manufacturer VARCHAR2(255) NOT NULL,
             inaugural_date DATE
         )""")
-    cursor.execute("""
-        CREATE TABLE Starborn_Missions (
-            mission_id NUMBER PRIMARY KEY,
-            mission_name VARCHAR2(255) NOT NULL,
-            launch_date DATE,
-            destination VARCHAR2(255),
-            duration NUMBER,
-            mission_status VARCHAR2(255),
-            spacecraft_id NUMBER,
-            CONSTRAINT fk_spacecraft FOREIGN KEY (spacecraft_id) REFERENCES Starborn_Spacecrafts(spacecraft_id)
-        )""")
+    
     cursor.execute("""
         CREATE TABLE Starborn_Astronauts (
             astronaut_id NUMBER PRIMARY KEY,
@@ -101,12 +91,24 @@ try:
         )""")
     cursor.execute("""
         CREATE TABLE Starborn_Space_Budgets (
-            mission_id NUMBER,
+            budget_id NUMBER PRIMARY KEY,
             agency_id NUMBER,
             budget_amount NUMBER,
-            PRIMARY KEY (mission_id, agency_id),
-            FOREIGN KEY (mission_id) REFERENCES Starborn_Missions(mission_id),
             FOREIGN KEY (agency_id) REFERENCES Starborn_Space_Agencies(agency_id)
+        )""")
+    
+    cursor.execute("""
+        CREATE TABLE Starborn_Missions (
+            mission_id NUMBER PRIMARY KEY,
+            mission_name VARCHAR2(255) NOT NULL,
+            launch_date DATE,
+            destination VARCHAR2(255),
+            duration NUMBER,
+            mission_status VARCHAR2(255),
+            budget_id NUMBER,
+            spacecraft_id NUMBER,
+            CONSTRAINT fk_spacecraft FOREIGN KEY (spacecraft_id) REFERENCES Starborn_Spacecrafts(spacecraft_id),
+            CONSTRAINT fk_budget FOREIGN KEY (budget_id) REFERENCES Starborn_Space_Budgets(budget_id)
         )""")
     
     cursor.execute("""
