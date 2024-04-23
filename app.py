@@ -162,6 +162,24 @@ def stars():
 
 @app.route('/astronauts')
 def astronauts():
+    if request.method == 'POST' and 'astronautid' in request.form and 'astronautname' in request.form and 'birthdate' in request.form and 'nationality' in request.form:
+        astronaut_id = request.form['astronautid']
+        astronaut_name = request.form['astronautname']
+        birth_date = request.form['birthdate']
+        nationality = request.form['nationality']
+        
+       
+        # Check if star_id already exists
+        cursor.execute("SELECT COUNT(*) FROM Starborn_Astronauts WHERE astronaut_id = :1", (astronaut_id,))
+        result = cursor.fetchone()
+        if result[0] > 0:
+            print("Error: Spacecraft ID already exists. Please choose a different ID.")
+        else:
+            # Insert values into Space Exploration Budgets Table
+            cursor.execute("INSERT INTO Spacecrafts (spacecraft_id, spacecraft_name, inaugural_date, manufacturer) VALUES (:1, :2, TO_DATE(:3, 'YYYY-MM-DD'), :4)", 
+            (spacecraft_id, spacecraft_name, inaugural_date, manufacturer))
+            print("Record inserted successfully.")
+    
     return render_template('astronauts.html')
 
 @app.route('/launchsites')
