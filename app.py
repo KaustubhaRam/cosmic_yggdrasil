@@ -58,20 +58,20 @@ def agencies():
 
 @app.route('/budget', methods=['GET', 'POST'])
 def budget():
-    if request.method == 'POST' and 'missionid' in request.form and 'amount' in request.form and 'agencyid' in request.form:
-        mission_id = request.form['missionid']
+    if request.method == 'POST' and 'budgetid' in request.form and 'amount' in request.form and 'agencyid' in request.form:
+        budget_id = request.form['budgetid']
         budget_amount = request.form['amount']
         agency_id = request.form['agencyid']
        
         # Check if star_id already exists
-        cursor.execute("SELECT COUNT(*) FROM Starborn_Space_Budgets WHERE Mission_id = :1", (mission_id,))
+        cursor.execute("SELECT COUNT(*) FROM Starborn_Space_Budgets WHERE budget_id = :1", (budget_id,))
         result = cursor.fetchone()
         if result[0] > 0:
-            print("Error: Mission ID already exists. Please choose a different ID.")
+            print("Error: budget_id ID already exists. Please choose a different ID.")
         else:
             # Insert values into Space Exploration Budgets Table
-            cursor.execute("INSERT INTO Starborn_Space_Budgets (mission_id, agency_id, budget_amount) VALUES (:mission_id, :agency_id, :budget_amount)", 
-            {'mission_id': mission_id, 'agency_id': agency_id, 'budget_amount': budget_amount})
+            cursor.execute("INSERT INTO Starborn_Space_Budgets (budget_id, agency_id, budget_amount) VALUES (:budget_id, :agency_id, :budget_amount)", 
+            {'budget_id': budget_id, 'agency_id': agency_id, 'budget_amount': budget_amount})
             print("Record inserted successfully.")
     
     return render_template('budget.html')
@@ -207,13 +207,15 @@ def launchsites():
 
 @app.route('/missions', methods=['GET', 'POST'])
 def misions():
-    if request.method == 'POST' and 'missionid' in request.form and 'missionname' in request.form and 'launchdate' in request.form and 'destination' in request.form and 'duration' in request.form and 'missionstatus' in request.form and 'spacecraftid' in request.form:
+    if request.method == 'POST' and 'missionid' in request.form and 'missionname' in request.form and 'launchdate' in request.form and 'destination' in request.form and 'duration' in request.form and 'missionstatus' in request.form and 'spacecraftid' in request.form and 'budgetid' in request.form:
         mission_id = request.form['missionid']
         mission_name = request.form['missionname']
         launch_date = request.form['launchdate']
         destination = request.form['destination']
         duration = request.form['duration']
         mission_status = request.form['missionstatus']
+        budget_id = request.form['budget_id']
+
        
         # Check if star_id already exists
         cursor.execute("SELECT COUNT(*) FROM Starborn_Missions WHERE mission_id = :1", (mission_id,))
@@ -222,8 +224,8 @@ def misions():
             print("Error: Mission ID already exists. Please choose a different ID.")
         else:
             # Insert values into Space Exploration Budgets Table
-            cursor.execute("INSERT INTO Starborn_Missions (mission_id, mission_name, launch_date, destination, duration, mission_status, spacecraft_id) VALUES (:1, :2, TO_DATE(:3, 'YYYY-MM-DD'), :4, :5, :6, :7)", 
-            (mission_id, mission_name, launch_date, destination, duration, mission_status))
+            cursor.execute("INSERT INTO Starborn_Missions (mission_id, mission_name, launch_date, destination, duration, mission_status, spacecraft_id, budget_id) VALUES (:1, :2, TO_DATE(:3, 'YYYY-MM-DD'), :4, :5, :6, :7, :8)", 
+            (mission_id, mission_name, launch_date, destination, duration, mission_status, budget_id))
             print("Record inserted successfully.")
     
     return render_template('missions.html')
