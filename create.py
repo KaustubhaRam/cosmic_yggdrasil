@@ -54,7 +54,7 @@ try:
     cursor.execute("""
         CREATE TABLE Starborn_Astronauts (
             astronaut_id NUMBER PRIMARY KEY,
-            name VARCHAR2(255) NOT NULL,
+            astronaut_name VARCHAR2(255) NOT NULL,
             nationality VARCHAR2(255) NOT NULL,
             birth_date DATE
         )""")
@@ -75,7 +75,7 @@ try:
             discovery_method VARCHAR2(255),
             discovery_year NUMBER,
             distance_from_earth NUMBER,
-            host_star_name VARCHAR2(255)
+            host_star_id NUMBER
         )""")
     cursor.execute("""
         CREATE TABLE Starborn_Launch_Sites (
