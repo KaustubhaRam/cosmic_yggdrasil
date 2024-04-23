@@ -36,7 +36,7 @@ def login():
 def home():
     return render_template('home.html')
 
-@app.route('/agencies')
+@app.route('/agencies', methods=['GET', 'POST'])
 def agencies():
     if request.method == 'POST' and 'agencyid' in request.form and 'agencyname' in request.form and 'agencycountry' in request.form and 'agencyyear' in request.form:
         agency_id = request.form['agencyid']
@@ -56,7 +56,7 @@ def agencies():
     
     return render_template('agencies.html')
 
-@app.route('/budget')
+@app.route('/budget', methods=['GET', 'POST'])
 def budget():
     if request.method == 'POST' and 'missionid' in request.form and 'amount' in request.form and 'agencyid' in request.form:
         mission_id = request.form['missionid']
@@ -76,7 +76,7 @@ def budget():
     
     return render_template('budget.html')
 
-@app.route('/exoplanets')
+@app.route('/exoplanets', methods=['GET', 'POST'])
 def exoplanets():
     if request.method == 'POST' and 'exoplanetid' in request.form and 'exoplanetname' in request.form and 'discoverymethod' in request.form and 'discoveryyear' in request.form and 'distancefromearth' in request.form and 'hoststarid' in request.form:
         exoplanet_id = request.form['exoplanetid']
@@ -99,7 +99,7 @@ def exoplanets():
     
     return render_template('exoplanets.html')
 
-@app.route('/planets')
+@app.route('/planets', methods=['GET', 'POST'])
 def planets():
     if request.method == 'POST' and 'planetid' in request.form and 'planetname' in request.form and 'discoverymethod' in request.form and 'discoveryyear' in request.form and 'distancefromearth' in request.form and 'hoststarid' in request.form:
         planet_id = request.form['planetid']
@@ -120,7 +120,7 @@ def planets():
             (planet_id,planetname,diameter,noofmoons,distancefromhost, hoststarid))
             print("Record inserted successfully.")
     
-    return render_template('planets.html')
+    return render_template('planets.html', methods=['GET', 'POST'])
 
 @app.route('/spacecrafts')
 def spacecrafts():
@@ -142,7 +142,7 @@ def spacecrafts():
             (spacecraft_id, spacecraft_name, inaugural_date, manufacturer))
             print("Record inserted successfully.")
     
-    return render_template('spacecrafts.html')
+    return render_template('spacecrafts.html', methods=['GET', 'POST'])
 
 @app.route('/stars', methods=['GET', 'POST'])
 def stars():
@@ -160,7 +160,7 @@ def stars():
     
     return render_template('stars.html')
 
-@app.route('/astronauts')
+@app.route('/astronauts', methods=['GET', 'POST'])
 def astronauts():
     if request.method == 'POST' and 'astronautid' in request.form and 'astronautname' in request.form and 'birthdate' in request.form and 'nationality' in request.form:
         astronaut_id = request.form['astronautid']
@@ -180,9 +180,9 @@ def astronauts():
             (astronaut_id, astronaut_name, birth_date, nationality))
             print("Record inserted successfully.")
     
-    return render_template('astronauts.html')
+    return render_template('astronauts.html', methods=['GET', 'POST'])
 
-@app.route('/launchsites')
+@app.route('/launchsites', methods=['GET', 'POST'])
 def launchsites():
     if request.method == 'POST' and 'launchsiteid' in request.form and 'launchsitename' in request.form and 'country' in request.form and 'latitude' in request.form and 'longitude' in request.form:
         launch_site_id = request.form['launchsiteid']
@@ -205,8 +205,8 @@ def launchsites():
     
     return render_template('launchsites.html')
 
-@app.route('/missions')
-def missions():
+@app.route('/missions', methods=['GET', 'POST'])
+def misions():
     if request.method == 'POST' and 'missionid' in request.form and 'missionname' in request.form and 'launchdate' in request.form and 'destination' in request.form and 'duration' in request.form and 'missionstatus' in request.form and 'spacecraftid' in request.form:
         mission_id = request.form['missionid']
         mission_name = request.form['missionname']
@@ -228,7 +228,7 @@ def missions():
     
     return render_template('missions.html')
 
-@app.route('/spaceevents')
+@app.route('/spaceevents', methods=['GET', 'POST'])
 def spaceevents():
     if request.method == 'POST' and 'eventid' in request.form and 'eventname' in request.form and 'eventdate' in request.form and 'description' in request.form:
         event_id = request.form['eventid']
