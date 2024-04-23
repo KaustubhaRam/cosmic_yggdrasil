@@ -28,13 +28,13 @@
                 <div class="container">
                     <h1>Stars</h1>
 
-                    <form>
+                    <form method="POST" action="{{ url_for('stars') }}">
                         <div class="form-group">
-                            <label for="starid">Spacecraft ID*</label>
+                            <label for="starid">Star ID*</label>
                             <input type="text" name="starid" id="starid" required class="form-element" placeholder="0000"/>
                         </div>
                         <div class="form-group">
-                            <label for="starname">Spacecraft name*</label>
+                            <label for="starname">Star name*</label>
                             <input type="text" name="starname" id="starname" required class="form-element" placeholder="Star"/>
                         </div>
                         <div class="submit-group">

@@ -56,8 +56,20 @@ def planets():
 def spacecrafts():
     return render_template('spacecrafts.html')
 
-@app.route('/stars')
+@app.route('/stars', methods=['GET', 'POST'])
 def stars():
+    if request.method == 'POST' and 'starid' in request.form and 'starname' in request.form:
+        star_id = request.form['starid']
+        star_name = request.form['starname']
+        # Check if star_id already exists
+        cursor.execute("SELECT COUNT(*) FROM Starborn_Stars WHERE star_id = :1", (star_id,))
+        result = cursor.fetchone()
+        if result[0] > 0:
+            print("Error: Star ID already exists. Please choose a different ID.")
+        else:
+            cursor.execute("INSERT INTO Starborn_Stars (star_id, star_name) VALUES (:1, :2)", (star_id, star_name))
+            print("Record inserted successfully.")
+    
     return render_template('stars.html')
 
 
