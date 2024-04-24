@@ -18,16 +18,16 @@
                         <a href="/budget">BUDGET</a><br><br>
                         <a href="/spacecrafts">SPACECRAFT</a>
                         <a href="/stars">STARS</a>
-                        <a href="#">EVENTS</a>
-                        <a href="#">MISSIONS</a>
-                        <a href="#">ASTRONAUTS</a>
+                        <a href="/spaceeventd">EVENTS</a>
+                        <a href="/missions">MISSIONS</a>
+                        <a href="/sdtronauts">ASTRONAUTS</a>
                     <!--<a href="#">LAUNCH SITES</a>-->
                     </div>
             </header>
             <section class="section-contact">
                 <div class="container">
                     <h1>Agencies</h1>
-                    <form>
+                    <form method="POST" action="{{ url_for('agencies') }}">
                         <div class="form-group">
                             <label for="agencyid">Agency ID*</label>
                             <input type="text" name="agencyid" id="agencyid" required class="form-element" placeholder="0000"/>

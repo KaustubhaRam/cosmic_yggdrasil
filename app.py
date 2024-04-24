@@ -14,12 +14,10 @@ def login():
     if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
         username = request.form['username']
         password = request.form['password']
-        print(username, password)
         # Correct SQL query parameterization using ":" instead of "%s"
         cursor.execute('SELECT * FROM Starborn_Login WHERE username = :username AND password = :password', 
                        {'username': username, 'password': password})
         row = cursor.fetchone()
-        print(row)
         if row:
             # Extract column names from cursor description
             column_names = [desc[0] for desc in cursor.description]
@@ -53,7 +51,7 @@ def agencies():
             cursor.execute("INSERT INTO Starborn_Space_Agencies (agency_id, agency_name, country, establishment_year) VALUES (:agencyid, :agency_name, :country, :establishment_year)", 
             {'agency_id': agency_id, 'agency_name': agency_name, 'country': country, 'establishment_year': establishment_year})
             print("Record inserted successfully.")
-    
+    con.commit()
     return render_template('agencies.html')
 
 @app.route('/budget', methods=['GET', 'POST'])
@@ -72,6 +70,8 @@ def budget():
             # Insert values into Space Exploration Budgets Table
             cursor.execute("INSERT INTO Starborn_Space_Budgets (budget_id, agency_id, budget_amount) VALUES (:budget_id, :agency_id, :budget_amount)", 
             {'budget_id': budget_id, 'agency_id': agency_id, 'budget_amount': budget_amount})
+            con.commit()
+
             print("Record inserted successfully.")
     
     return render_template('budget.html')
@@ -96,7 +96,7 @@ def exoplanets():
             cursor.execute("INSERT INTO Starborn_Exoplanets (exoplanet_id,exoplanet_name, discovery_method, discovery_year, distance_from_earth, host_star_id) VALUES (:1, :2, :3, :4, :5, :6)", 
             (exoplanet_id,exoplanetname,discoverymethod,discoveryyear,distancefromearth,hoststarid))
             print("Record inserted successfully.")
-    
+    con.commit()
     return render_template('exoplanets.html')
 
 @app.route('/planets', methods=['GET', 'POST'])
@@ -116,13 +116,13 @@ def planets():
             print("Error: Planet ID already exists. Please choose a different ID.")
         else:
             # Insert values into Space Exploration Budgets Table
-            cursor.execute("INSERT INTO Starborn_Exoplanets (planet_id,planet_name,diameter,no_of_moons,distance_from_host, host_star_id) VALUES (:1, :2, :3, :4, :5, :6)", 
+            cursor.execute("INSERT INTO Starborn_Planets (planet_id,planet_name,diameter,no_of_moons,distance_from_host, host_star_id) VALUES (:1, :2, :3, :4, :5, :6)", 
             (planet_id,planetname,diameter,noofmoons,distancefromhost, hoststarid))
             print("Record inserted successfully.")
-    
+    con.commit()
     return render_template('planets.html', methods=['GET', 'POST'])
 
-@app.route('/spacecrafts')
+@app.route('/spacecrafts', methods=['GET', 'POST'])
 def spacecrafts():
     if request.method == 'POST' and 'spacecraftid' in request.form and 'spacecraftname' in request.form and 'inauguraldate' in request.form and 'manufacturer' in request.form:
         spacecraft_id = request.form['spacecraftid']
@@ -138,10 +138,10 @@ def spacecrafts():
             print("Error: Spacecraft ID already exists. Please choose a different ID.")
         else:
             # Insert values into Space Exploration Budgets Table
-            cursor.execute("INSERT INTO Spacecrafts (spacecraft_id, spacecraft_name, inaugural_date, manufacturer) VALUES (:1, :2, TO_DATE(:3, 'YYYY-MM-DD'), :4)", 
+            cursor.execute("INSERT INTO Starborn_Spacecrafts (spacecraft_id, spacecraft_name, inaugural_date, manufacturer) VALUES (:1, :2, TO_DATE(:3, 'YYYY-MM-DD'), :4)", 
             (spacecraft_id, spacecraft_name, inaugural_date, manufacturer))
             print("Record inserted successfully.")
-    
+    con.commit()
     return render_template('spacecrafts.html', methods=['GET', 'POST'])
 
 @app.route('/stars', methods=['GET', 'POST'])
@@ -157,7 +157,7 @@ def stars():
         else:
             cursor.execute("INSERT INTO Starborn_Stars (star_id, star_name) VALUES (:1, :2)", (star_id, star_name))
             print("Record inserted successfully.")
-    
+    con.commit()
     return render_template('stars.html')
 
 @app.route('/astronauts', methods=['GET', 'POST'])
@@ -179,7 +179,7 @@ def astronauts():
             cursor.execute("INSERT INTO Starborn_Astronauts (astronaut_id, astronaut_name, birth_date, nationality) VALUES (:1, :2, TO_DATE(:3, 'YYYY-MM-DD'), :4)", 
             (astronaut_id, astronaut_name, birth_date, nationality))
             print("Record inserted successfully.")
-    
+    con.commit()
     return render_template('astronauts.html', methods=['GET', 'POST'])
 
 @app.route('/launchsites', methods=['GET', 'POST'])
@@ -202,7 +202,7 @@ def launchsites():
             cursor.execute("INSERT INTO Starborn_Launch_Sites (launch_site_id, launch_site_name, country, latitude, longitude) VALUES (:1, :2, :3, :4, :5)", 
             (launch_site_id, launch_site_name, country, latitude, longitude))
             print("Record inserted successfully.")
-    
+    con.commit()
     return render_template('launchsites.html')
 
 @app.route('/missions', methods=['GET', 'POST'])
@@ -227,7 +227,7 @@ def misions():
             cursor.execute("INSERT INTO Starborn_Missions (mission_id, mission_name, launch_date, destination, duration, mission_status, spacecraft_id, budget_id) VALUES (:1, :2, TO_DATE(:3, 'YYYY-MM-DD'), :4, :5, :6, :7, :8)", 
             (mission_id, mission_name, launch_date, destination, duration, mission_status, budget_id))
             print("Record inserted successfully.")
-    
+    con.commit()
     return render_template('missions.html')
 
 @app.route('/spaceevents', methods=['GET', 'POST'])
@@ -249,7 +249,7 @@ def spaceevents():
             cursor.execute("INSERT INTO Starborn_Space_Events (event_id, event_name, event_date, description) VALUES (:event_id, :event_name, :event_date, :description)", 
             {'event_id': event_id, 'event_name': event_name, 'event_date': event_date, 'description': description})
             print("Record inserted successfully.")
-    
+    con.commit()
     return render_template('spaceevents.html')
 
 

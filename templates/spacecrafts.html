@@ -18,9 +18,9 @@
                         <a href="/budget">BUDGET</a><br><br>
                         <a href="/spacecrafts">SPACECRAFT</a>
                         <a href="/stars">STARS</a>
-                        <a href="#">EVENTS</a>
-                        <a href="#">MISSIONS</a>
-                        <a href="#">ASTRONAUTS</a>
+                        <a href="/spaceeventd">EVENTS</a>
+                        <a href="/missions">MISSIONS</a>
+                        <a href="/sdtronauts">ASTRONAUTS</a>
                     <!--<a href="#">LAUNCH SITES</a>-->
                     </div>
             </header>
@@ -28,14 +28,14 @@
                 <div class="container">
                     <h1>Spacecrafts</h1>
 
-                    <form>
+                    <form method="POST" action="{{ url_for('spacecrafts') }}">
                         <div class="form-group">
                             <label for="spacecraftid">Spacecraft ID*</label>
                             <input type="text" name="spacecraftid" id="spacecraftid" required class="form-element" placeholder="0000"/>
                         </div>
                         <div class="form-group">
                             <label for="spacecraftname">Spacecraft name*</label>
-                            <input type="text" name="planetname" id="planetname" required class="form-element" placeholder="Starborn"/>
+                            <input type="text" name="spacecraftname" id="spacecraftname" required class="form-element" placeholder="Starborn"/>
                         </div>
                         <div class="form-group">
                             <label for="inauguraldate">Inaugural Date*</label>
