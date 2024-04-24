@@ -26,7 +26,7 @@
             </header>
             <section class="section-contact">
                 <div class="container">
-                    <h1>Exoplanets</h1>
+                    <h1>Space Events</h1>
 
                     <form method="POST" action="{{ url_for('spaceevents') }}">
                         <div class="form-group">
@@ -44,6 +44,9 @@
                         <div class="form-group">
                             <label for="description">Event description*</label>
                             <input type="text" name="description" id="description" required class="form-element" placeholder="direct imaging"/>
+                        </div>
+                        <div class="submit-group">
+                            <input type="submit" value="Submit details">
                         </div>
                     </form>
                 </div>
