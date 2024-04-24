@@ -160,10 +160,26 @@ header .navigation a:hover{
   cursor: pointer;
   transition: 0.4s;
 }
+.section-contact .container form .submit-group button {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  border: none;
+  outline: none;
+  background: none;
+  padding: 12px 16px;
+  background-color: #FF9FDB;
+  border-radius: 8px;
+  color: #FFF;
+  cursor: pointer;
+  transition: 0.4s;
+}
 .section-contact .container form .submit-group input[type=submit]:hover {
   background-color: #9B75D7;
 }
-
+.section-contact .container form .submit-group button:hover {
+  background-color: #9B75D7;
+}
 .pulse {
   position: relative;
   width: 200px;
