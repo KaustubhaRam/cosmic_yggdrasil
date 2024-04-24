@@ -252,6 +252,28 @@ def spaceevents():
     con.commit()
     return render_template('spaceevents.html')
 
+@app.route('/view_table/<table_name>', methods=['GET', 'POST'])
+def view_table(table_name):
+    msg = ''
+    prev_page = request.args.get('prev_page', '/home')  # Default to '/home' if not provided
+
+    try:
+        cursor.execute(f'SELECT * FROM {table_name}')
+        data = cursor.fetchall()
+        print(data)
+        if data:
+            # Render the template with the table name and data
+            return render_template('view_table.html', table_name=table_name, data=data, msg=msg)
+        else:
+            msg = f'No data found in the {table_name} table.'
+    except cx_Oracle.DatabaseError as e:
+        error, = e.args
+        msg = f'Error: {error.message}'
+    
+    
+
+    # Render the template with the error message if an exception occurred
+    return render_template('view_table.html', table_name=table_name, msg=msg)
 
 if __name__ == "__main__":
     app.run(debug=True)
