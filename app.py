@@ -4,7 +4,7 @@ from flask import Flask, render_template, request, session
 app = Flask(__name__)
 app.secret_key = 'pass'
 
-con = cx_Oracle.connect('system/mysql@localhost:1521/xe')
+con = cx_Oracle.connect('system/oraclesql@localhost:1521/xe')
 cursor = con.cursor()
 
 

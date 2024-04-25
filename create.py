@@ -3,7 +3,7 @@ import cx_Oracle
 # Establish a connection to the Oracle database
 try:
     # Connect using your credentials and Oracle SID
-    con = cx_Oracle.connect('system/mysql@localhost:1521/xe')
+    con = cx_Oracle.connect('system/oraclesql@localhost:1521/xe')
     print("Connected to Oracle Database", con.version)
     cursor = con.cursor()
 
