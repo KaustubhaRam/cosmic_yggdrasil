@@ -63,7 +63,7 @@ try:
             exoplanet_id NUMBER PRIMARY KEY,
             exoplanet_name VARCHAR2(255) NOT NULL,
             discovery_method VARCHAR2(255),
-            discovery_year NUMBER,
+            discovery_year DATE,
             distance_from_earth NUMBER,
             host_star_id NUMBER
         )""")
@@ -87,7 +87,7 @@ try:
             agency_id NUMBER PRIMARY KEY,
             agency_name VARCHAR2(255) NOT NULL,
             country VARCHAR2(255) NOT NULL,
-            establishment_year NUMBER
+            establishment_year DATE
         )""")
     cursor.execute("""
         CREATE TABLE Starborn_Space_Budgets (

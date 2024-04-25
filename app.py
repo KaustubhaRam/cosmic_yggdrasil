@@ -39,7 +39,7 @@ def agencies():
     if request.method == 'POST' and 'agencyid' in request.form and 'agencyname' in request.form and 'agencycountry' in request.form and 'agencyyear' in request.form:
         agency_id = request.form['agencyid']
         agency_name = request.form['agencyname']
-        country = request.form['agencycountry']
+        agency_country = request.form['agencycountry']
         establishment_year = request.form['agencyyear']
 
         # Check if star_id already exists
@@ -48,8 +48,8 @@ def agencies():
         if result[0] > 0:
             print("Error: Agency ID already exists. Please choose a different ID.")
         else:
-            cursor.execute("INSERT INTO Starborn_Space_Agencies (agency_id, agency_name, country, establishment_year) VALUES (:agencyid, :agency_name, :country, :establishment_year)", 
-            {'agency_id': agency_id, 'agency_name': agency_name, 'country': country, 'establishment_year': establishment_year})
+            cursor.execute("INSERT INTO Starborn_Space_Agencies (agency_id, agency_name, country, establishment_year) VALUES (:agency_id, :agency_name, :country, TO_DATE(:establishment_year, 'YYYY-MM-DD'))", 
+            {'agency_id': agency_id, 'agency_name': agency_name, 'country': agency_country, 'establishment_year': establishment_year})
             print("Record inserted successfully.")
     con.commit()
     return render_template('agencies.html')
@@ -93,7 +93,7 @@ def exoplanets():
             print("Error: Exoplanet ID already exists. Please choose a different ID.")
         else:
             # Insert values into Space Exploration Budgets Table
-            cursor.execute("INSERT INTO Starborn_Exoplanets (exoplanet_id,exoplanet_name, discovery_method, discovery_year, distance_from_earth, host_star_id) VALUES (:1, :2, :3, :4, :5, :6)", 
+            cursor.execute("INSERT INTO Starborn_Exoplanets (exoplanet_id,exoplanet_name, discovery_method, discovery_year, distance_from_earth, host_star_id) VALUES (:1, :2, :3, TO_DATE(:4, 'YYYY-MM-DD'), :5, :6)", 
             (exoplanet_id,exoplanetname,discoverymethod,discoveryyear,distancefromearth,hoststarid))
             print("Record inserted successfully.")
     con.commit()
@@ -101,7 +101,7 @@ def exoplanets():
 
 @app.route('/planets', methods=['GET', 'POST'])
 def planets():
-    if request.method == 'POST' and 'planetid' in request.form and 'planetname' in request.form and 'discoverymethod' in request.form and 'discoveryyear' in request.form and 'distancefromearth' in request.form and 'hoststarid' in request.form:
+    if request.method == 'POST' and 'planetid' in request.form and 'planetname' in request.form and 'diameter' in request.form and 'nooofmoons' in request.form and 'distancefromhost' in request.form and 'hoststarid' in request.form:
         planet_id = request.form['planetid']
         planetname = request.form['planetname']
         diameter = request.form['diameter']
@@ -214,7 +214,8 @@ def missions():
         destination = request.form['destination']
         duration = request.form['duration']
         mission_status = request.form['missionstatus']
-        budget_id = request.form['budget_id']
+        spacecraft_id = request.form['spacecraftid']
+        budget_id = request.form['budgetid']
 
        
         # Check if star_id already exists
@@ -225,7 +226,7 @@ def missions():
         else:
             # Insert values into Space Exploration Budgets Table
             cursor.execute("INSERT INTO Starborn_Missions (mission_id, mission_name, launch_date, destination, duration, mission_status, spacecraft_id, budget_id) VALUES (:1, :2, TO_DATE(:3, 'YYYY-MM-DD'), :4, :5, :6, :7, :8)", 
-            (mission_id, mission_name, launch_date, destination, duration, mission_status, budget_id))
+            (mission_id, mission_name, launch_date, destination, duration, mission_status,spacecraft_id, budget_id))
             print("Record inserted successfully.")
     con.commit()
     return render_template('missions.html')
@@ -263,7 +264,7 @@ def view_table(table_name):
         print(data)
         if data:
             # Render the template with the table name and data
-            return render_template('view_table.html', table_name=table_name, data=data, msg=msg)
+            return render_template('view_table.html', table_name=table_name, data=data, msg=msg, prev_page=prev_page)
         else:
             msg = f'No data found in the {table_name} table.'
     except cx_Oracle.DatabaseError as e:
@@ -273,7 +274,7 @@ def view_table(table_name):
     
 
     # Render the template with the error message if an exception occurred
-    return render_template('view_table.html', table_name=table_name, msg=msg)
+    return render_template('view_table.html', table_name=table_name, msg=msg,prev_page=prev_page)
 
 if __name__ == "__main__":
     app.run(debug=True)
