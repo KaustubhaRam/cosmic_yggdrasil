@@ -3,7 +3,7 @@ import cx_Oracle
 # Establish a connection to the Oracle database
 try:
     # Connect using your credentials and Oracle SID
-    con = cx_Oracle.connect('system/oraclesql@localhost:1521/xe')
+    con = cx_Oracle.connect('system/mysql@localhost:1521/xe')
     print("Connected to Oracle Database", con.version)
     cursor = con.cursor()
 
@@ -63,9 +63,10 @@ try:
             exoplanet_id NUMBER PRIMARY KEY,
             exoplanet_name VARCHAR2(255) NOT NULL,
             discovery_method VARCHAR2(255),
-            discovery_year DATE,
+            discovery_year NUMBER,
             distance_from_earth NUMBER,
-            host_star_id NUMBER
+            host_star_id NUMBER,
+            CONSTRAINT fk_stars2 FOREIGN KEY (host_star_id) REFERENCES Starborn_Stars(star_id)
         )""")
     cursor.execute("""
         CREATE TABLE Starborn_Launch_Sites (
@@ -87,7 +88,7 @@ try:
             agency_id NUMBER PRIMARY KEY,
             agency_name VARCHAR2(255) NOT NULL,
             country VARCHAR2(255) NOT NULL,
-            establishment_year DATE
+            establishment_year NUMBER
         )""")
     cursor.execute("""
         CREATE TABLE Starborn_Space_Budgets (

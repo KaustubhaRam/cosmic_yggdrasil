@@ -48,7 +48,7 @@ def agencies():
         if result[0] > 0:
             print("Error: Agency ID already exists. Please choose a different ID.")
         else:
-            cursor.execute("INSERT INTO Starborn_Space_Agencies (agency_id, agency_name, country, establishment_year) VALUES (:agency_id, :agency_name, :country, TO_DATE(:establishment_year, 'YYYY-MM-DD'))", 
+            cursor.execute("INSERT INTO Starborn_Space_Agencies (agency_id, agency_name, country, establishment_year) VALUES (:agency_id, :agency_name, :country, :establishment_year)", 
             {'agency_id': agency_id, 'agency_name': agency_name, 'country': agency_country, 'establishment_year': establishment_year})
             print("Record inserted successfully.")
     con.commit()
@@ -93,7 +93,7 @@ def exoplanets():
             print("Error: Exoplanet ID already exists. Please choose a different ID.")
         else:
             # Insert values into Space Exploration Budgets Table
-            cursor.execute("INSERT INTO Starborn_Exoplanets (exoplanet_id,exoplanet_name, discovery_method, discovery_year, distance_from_earth, host_star_id) VALUES (:1, :2, :3, TO_DATE(:4, 'YYYY-MM-DD'), :5, :6)", 
+            cursor.execute("INSERT INTO Starborn_Exoplanets (exoplanet_id,exoplanet_name, discovery_method, discovery_year, distance_from_earth, host_star_id) VALUES (:1, :2, :3, :4, :5, :6)", 
             (exoplanet_id,exoplanetname,discoverymethod,discoveryyear,distancefromearth,hoststarid))
             print("Record inserted successfully.")
     con.commit()

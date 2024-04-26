@@ -2,7 +2,7 @@ import cx_Oracle
 
 try:
     # Establish a connection to the Oracle database
-    con = cx_Oracle.connect('system/oracle_1234@localhost:1521/xe')
+    con = cx_Oracle.connect('system/mysql@localhost:1521/xe')
     cursor = con.cursor()
 
     # Insert data into the Stars table
@@ -18,7 +18,6 @@ try:
         (9, 'Copernicus'),
         (10, 'Cujam')
     ]
-    cursor.executemany("INSERT INTO Stars (star_id, star_name) VALUES (:1, :2)", stars_data)
 
     # Insert data into the Spacecrafts table
 
@@ -35,7 +34,6 @@ try:
     (10, 'Apollo Lunar Module', 'NASA', '1966-02-10'),
         # Add more spacecraft data as needed
     ]
-    cursor.executemany("INSERT INTO Spacecrafts (spacecraft_id, spacecraft_name, manufacturer, inaugural_date) VALUES (:1, :2, :3, TO_DATE(:4, 'YYYY-MM-DD'))", spacecraft_data)
 
     # Insert data into the Missions table
    
@@ -53,22 +51,20 @@ try:
         (9, 'Mae Jemison', 'American', '1956-10-17'),
         (10, 'Guion Bluford', 'American', '1942-11-22')
     ]
-    cursor.executemany("INSERT INTO Astronauts (astronaut_id, astronaut_name, nationality, birth_date) VALUES (:1, :2, :3, TO_DATE(:4, 'YYYY-MM-DD'))", astronauts_data)
 
     # Insert data into the Planets table
     planets_data = [
-        (1, 'Mercury', 4879, 0.39, 0),
-        (2, 'Venus', 12104, 0.72, 0),
-        (3, 'Earth', 12756, 1.0, 1),
-        (4, 'Mars', 6792, 1.52, 2),
-        (5, 'Jupiter', 139822, 5.2, 79),
-        (6, 'Saturn', 116464, 9.58, 82),
-        (7, 'Uranus', 50724, 19.22, 27),
-        (8, 'Neptune', 49244, 30.05, 14),
-        (9, 'Pluto', 2376, 39.48, 5),
-        (10, 'Eris', 2326, 67.66, 1)
+        (1, 'Mercury', 4879, 0.39, 0, 1),
+        (2, 'Venus', 12104, 0.72, 0,2),
+        (3, 'Earth', 12756, 1.0, 1,3),
+        (4, 'Mars', 6792, 1.52, 2,4),
+        (5, 'Jupiter', 139822, 5.2, 79,5),
+        (6, 'Saturn', 116464, 9.58, 82,6),
+        (7, 'Uranus', 50724, 19.22, 27,7),
+        (8, 'Neptune', 49244, 30.05, 14,8),
+        (9, 'Pluto', 2376, 39.48, 5,9),
+        (10, 'Eris', 2326, 67.66, 1,10)
     ]
-    cursor.executemany("INSERT INTO Planets (planet_id, planet_name, diameter, distance_from_sun, number_of_moons,host_star) VALUES (:1, :2, :3, :4, :5)", planets_data)
 
     # Insert data into the Exoplanets table
     exoplanets_data = [
@@ -83,7 +79,6 @@ try:
         (9, 'GJ 1214 b', 'Transit', 2009, 42.4, 5),
         (10, '51 Pegasi b', 'Radial Velocity', 1995, 50.9, 6)
     ]
-    cursor.executemany("INSERT INTO Exoplanets (exoplanet_id, exoplanet_name, discovery_method, discovery_year, distance_from_earth, host_star_id) VALUES (:1, :2, :3, :4, :5, :6)", exoplanets_data)
 
     # Insert data into the Launch_Sites table
     launch_sites_data = [
@@ -98,7 +93,6 @@ try:
         (9, 'Spaceport America', 'USA', 32.990, -106.974),
         (10, 'Mojave Air and Space Port', 'USA', 35.059, -118.151)
     ]
-    cursor.executemany("INSERT INTO Launch_Sites (launch_site_id, launch_site_name, country, latitude, longitude) VALUES (:1, :2, :3, :4, :5)", launch_sites_data)
 
     # Insert data into the Space_Events table
     space_events_data = [
@@ -113,7 +107,6 @@ try:
         (9, 'Cassini-Huygens Mission', '1997-10-15', 'Successful'),
         (10, 'SpaceX Starship Test Flight', '2021-12-09','Successful')
     ]
-    cursor.executemany("INSERT INTO Space_Events (event_id, event_name, event_date, description) VALUES (:1, :2, TO_DATE(:3, 'YYYY-MM-DD'), :4)", space_events_data)
 
     # Insert data into the Space_Agencies table
     space_agencies_data = [
@@ -128,7 +121,6 @@ try:
         (9, 'SpaceX', 'USA', 2002),
         (10, 'Blue Origin', 'USA', 2000)
     ]
-    cursor.executemany("INSERT INTO Space_Agencies (agency_id, agency_name, country, establishment_year) VALUES (:1, :2, :3, :4)", space_agencies_data)
 
     # Insert data into the Space_Exploration_Budgets table
     budgets_data = [
@@ -155,11 +147,37 @@ try:
         (9, 'Hubble Space Telescope', '1990-04-24', 'Low Earth Orbit', 31, 'Active', 8,8),
         (10, 'Apollo 13', '1970-04-11', 'Moon', 6, 'Failed', 9,9)
     ]
-    cursor.executemany("INSERT INTO Missions (mission_id, mission_name, launch_date, destination, duration, mission_status, spacecraft_id) VALUES (:1, :2, TO_DATE(:3, 'YYYY-MM-DD'), :4, :5, :6, :7)", missions_data)
-    cursor.executemany("INSERT INTO Space_Exploration_Budgets (mission_id, agency_id, budget_amount) VALUES (:1, :2, :3)", budgets_data)
+    
+    
+    
+    
+    
+    
+    
+    cursor.executemany("INSERT INTO Starborn_Stars (star_id, star_name) VALUES (:1, :2)", stars_data)
+    con.commit()
+
+    cursor.executemany("INSERT INTO Starborn_Space_Agencies (agency_id, agency_name, country, establishment_year) VALUES (:1, :2, :3, :4)", space_agencies_data)
+    con.commit()
+
+    cursor.executemany("INSERT INTO Starborn_Space_Events (event_id, event_name, event_date, description) VALUES (:1, :2, TO_DATE(:3, 'YYYY-MM-DD'), :4)", space_events_data)
+    con.commit()
+    cursor.executemany("INSERT INTO Starborn_Launch_Sites (launch_site_id, launch_site_name, country, latitude, longitude) VALUES (:1, :2, :3, :4, :5)", launch_sites_data)
+    con.commit()
+    cursor.executemany("INSERT INTO Starborn_Exoplanets (exoplanet_id, exoplanet_name, discovery_method, discovery_year, distance_from_earth, host_star_id) VALUES (:1, :2, :3, :4, :5, :6)", exoplanets_data)
+    con.commit()
+    cursor.executemany("INSERT INTO Starborn_Planets (planet_id, planet_name, diameter, distance_from_host, number_of_moons,host_star_id) VALUES (:1, :2, :3, :4, :5, :6)", planets_data)
+    con.commit()
+    cursor.executemany("INSERT INTO Starborn_Astronauts (astronaut_id, astronaut_name, nationality, birth_date) VALUES (:1, :2, :3, TO_DATE(:4, 'YYYY-MM-DD'))", astronauts_data)
+    con.commit()
+    cursor.executemany("INSERT INTO Starborn_Spacecrafts (spacecraft_id, spacecraft_name, manufacturer, inaugural_date) VALUES (:1, :2, :3, TO_DATE(:4, 'YYYY-MM-DD'))", spacecraft_data)
+    con.commit()
+    cursor.executemany("INSERT INTO Starborn_Space_Budgets (budget_id, agency_id, budget_amount) VALUES (:1, :2, :3)", budgets_data)
+    con.commit()
+    cursor.executemany("INSERT INTO Starborn_Missions (mission_id, mission_name, launch_date, destination, duration, mission_status, spacecraft_id,budget_id) VALUES (:1, :2, TO_DATE(:3, 'YYYY-MM-DD'), :4, :5, :6, :7, :8)", missions_data)
+    con.commit()
 
     # Commit the changes to the database
-    con.commit()
     print("Data inserted into tables successfully.")
 
 except cx_Oracle.DatabaseError as e:
