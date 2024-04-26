@@ -4,7 +4,7 @@ from flask import Flask, render_template, request, session
 app = Flask(__name__)
 app.secret_key = 'pass'
 
-con = cx_Oracle.connect('system/oraclesql@localhost:1521/xe')
+con = cx_Oracle.connect('system/mysql@localhost:1521/xe')
 cursor = con.cursor()
 
 
@@ -256,7 +256,6 @@ def spaceevents():
 @app.route('/view_table/<table_name>', methods=['GET', 'POST'])
 def view_table(table_name):
     msg = ''
-    prev_page = request.args.get('prev_page', '/home')  # Default to '/home' if not provided
 
     try:
         cursor.execute(f'SELECT * FROM {table_name}')
@@ -268,7 +267,7 @@ def view_table(table_name):
         print("Rows: ", rows)
         if data:
             # Render the template with the table name and data
-            return render_template('view_table.html', table_name=table_name, data=data, msg=msg, prev_page=prev_page)
+            return render_template('view_table.html', table_name=table_name, data=data, msg=msg)
         elif data==[]:
             msg = f'No data found in the {table_name} table.'
     except cx_Oracle.DatabaseError as e:
@@ -278,7 +277,7 @@ def view_table(table_name):
     
 
     # Render the template with the error message if an exception occurred
-    return render_template('view_table.html', table_name=table_name, msg=msg,prev_page=prev_page)
+    return render_template('view_table.html', table_name=table_name, msg=msg)
 
 if __name__ == "__main__":
     app.run(debug=True)
