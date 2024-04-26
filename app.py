@@ -253,22 +253,25 @@ def spaceevents():
     con.commit()
     return render_template('spaceevents.html')
 
-@app.route('/view_table/<table_name>', methods=['GET', 'POST'])
-def view_table(table_name):
+@app.route('/view_table/<o_table_name>', methods=['GET', 'POST'])
+def view_table(o_table_name):
+    ind_ = o_table_name.index("_")
+    table_name = o_table_name[ind_ + 1:]
     msg = ''
 
     try:
-        cursor.execute(f'SELECT * FROM {table_name}')
+        cursor.execute(f'SELECT * FROM {o_table_name}')
         rows = cursor.fetchall()
         columns = [col[0] for col in cursor.description]
+        
         data=[]
         for row in rows:
             data.append(dict(zip(columns,row)))
-        print("Rows: ", rows)
+        print("Data: ", data)
         if data:
             # Render the template with the table name and data
             return render_template('view_table.html', table_name=table_name, data=data, msg=msg)
-        elif data==[]:
+        elif data.empty():
             msg = f'No data found in the {table_name} table.'
     except cx_Oracle.DatabaseError as e:
         error, = e.args

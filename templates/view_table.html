@@ -39,9 +39,9 @@
             justify-content: center;
             align-items: center;
             border-color: aqua;
-            border-collapse: initial;
-            border-collapse: collapse; /* collapse borders into a single border */
-            width: 100%;
+            border-collapse: collapse; /* collapse borders into a single border */    
+            font-size: smaller;   
+            width: 100%;     
         }
 
         th, td {
@@ -56,8 +56,9 @@
             border-radius: 10px;
             color: #fff;
             padding: 10px 50px;
-            width: 50%;
-            margin-left: 400px;
+            padding-left: 10px;
+            width: 70%;
+            margin:auto;
             align-items: center;
             text-align: center;
         }
@@ -103,11 +104,11 @@
     <br>
     
     <div class="left-container">
-        <h1>{{ table_name | title }} Table</h1>
+        <h1>{{ table_name | upper }}</h1>
         {% if msg %}
             <p id="message">{{ msg }}</p>
         {% else %}
-            <table>
+            <table >
                 <tr>
                     {% for column in data[0].keys() %}
                         <th>{{ column }}</th>
