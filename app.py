@@ -269,7 +269,7 @@ def view_table(table_name):
         if data:
             # Render the template with the table name and data
             return render_template('view_table.html', table_name=table_name, data=data, msg=msg, prev_page=prev_page)
-        else:
+        elif data==[]:
             msg = f'No data found in the {table_name} table.'
     except cx_Oracle.DatabaseError as e:
         error, = e.args
