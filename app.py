@@ -259,8 +259,12 @@ def view_table(table_name):
 
     try:
         cursor.execute(f'SELECT * FROM {table_name}')
-        data = cursor.fetchall()
-        print(data)
+        rows = cursor.fetchall()
+        columns = [col[0] for col in cursor.description]
+        data=[]
+        for row in rows:
+            data.append(dict(zip(columns,row)))
+        print("Rows: ", rows)
         if data:
             # Render the template with the table name and data
             return render_template('view_table.html', table_name=table_name, data=data, msg=msg)
