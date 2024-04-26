@@ -8,20 +8,62 @@
     <title>{{ table_name | title }} Table - ALU Structures</title>
     <style>
         body {
-            display: flex;
+            
             justify-content: space-around;
             align-items: center;
             height: 100vh;
             margin: 0;
         }
 
+        .button {
+            color: #fff;
+            background: #8b74ff;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 2px;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: 0.3s;
+            transition-property: background;
+            cursor: pointer;
+        }
+
+        .button:hover{
+            background: #6252b5;
+        }
+
+        table {
+            padding: 4px 10px;
+            margin: 20px;
+            justify-content: center;
+            align-items: center;
+            border-color: aqua;
+            border-collapse: initial;
+            border-collapse: collapse; /* collapse borders into a single border */
+            width: 100%;
+        }
+
+        th, td {
+            border: 2px solid #231a53; /* set border thickness and color */
+            padding: 8px; /* add padding for better spacing */
+            text-align: left;
+        }
+        
+
         .left-container {
-            flex: 1;
+            background-color: rgba(253, 96, 75, 0.98);
+            border-radius: 10px;
+            color: #fff;
+            padding: 10px 50px;
+            width: 50%;
+            margin-left: 400px;
+            align-items: center;
             text-align: center;
         }
 
         .right-container {
-            flex: 1;
+            
             text-align: center;
         }
 
@@ -39,19 +81,33 @@
     </style>
 </head>
 <body>
-    <nav class="navbar">
-        HI
-    </nav>
+    <header>
+        <h2><a href="#" class="logo">STARBORN</h2>
+            <div class="navigation">
+                <a href="./home">HOME</a>
+                <a href="./agencies">AGENCIES</a>
+                <a href="./exoplanets">EXOPLANETS</a>
+                <a href="./planets">PLANETS</a>
+                <a href="./budget">BUDGET</a><br><br>
+                <a href="./spacecrafts">SPACECRAFT</a>
+                <a href="./stars">STARS</a>
+                <a href="./spaceevents">EVENTS</a>
+                <a href="./missions">MISSIONS</a>
+                <a href="./astronauts">ASTRONAUTS</a><br><br>
+                <a href="./launchsites">LAUNCH SITES</a>
+            </div>
+    </header>
     <br>
     <br>
     <br>
     <br>
+    
     <div class="left-container">
         <h1>{{ table_name | title }} Table</h1>
         {% if msg %}
             <p id="message">{{ msg }}</p>
         {% else %}
-            <table border="1">
+            <table>
                 <tr>
                     {% for column in data[0].keys() %}
                         <th>{{ column }}</th>
@@ -71,7 +127,8 @@
             </table>
         {% endif %}
     </div>
-
+    <br>
+    <br>
     <div class="right-container">
         <form method="POST">
             
